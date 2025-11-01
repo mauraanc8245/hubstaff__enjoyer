@@ -1,10 +1,10 @@
 # Hubstaff Activity Simulator
 
-Python script for simulating mouse activity to test Hubstaff activity tracker monitoring.
+Python script for simulating realistic human activity (mouse, keyboard, scrolling, app switching) to test Hubstaff activity tracker monitoring.
 
 ## Description
 
-This script simulates random mouse movements with configurable intervals, maintaining activity level between 70-90%. The script runs for a specified duration (default: 10 minutes) and displays statistics for each 10-minute period.
+This script simulates realistic human computer activity including mouse movements, keyboard typing, scrolling, application switching, and window management. It maintains activity level between 70-90% and runs continuously until manually stopped. The script displays statistics for each 10-minute period.
 
 ## Requirements
 
@@ -49,19 +49,29 @@ python3 hubstaff_activity_simulator.py --delay-min 3 --delay-max 12 --duration 2
 
 1. **Initialization**: The script detects screen size and sets a random activity level between 70-90%.
 
-2. **Mouse Movements**: The script performs three types of movements:
-   - **Smooth movements** - gradual movement between two points
-   - **Direct movements** - fast movement to target position
-   - **Chaotic movements** - movement through multiple intermediate points
+2. **Activity Types**: The script performs various realistic activities:
+   - **Mouse movements** - smooth, direct, and chaotic movements across the screen
+   - **Keyboard typing** - simulates typing random text with occasional backspaces
+   - **Keyboard shortcuts** - common shortcuts like copy, paste, save, undo, etc.
+   - **Mouse scrolling** - vertical scrolling in both directions
+   - **Application switching** - switches between applications using Command+Tab (macOS)
+   - **Window management** - opens/closes windows, tabs, and file dialogs
 
-3. **Activity Control**: The script calculates active time and idle time to maintain the target activity level (70-90%).
+3. **Natural Activity Sequence**: Activities are organized in a realistic pattern:
+   - Application switching occurs periodically (every 8th cycle)
+   - Window switching within apps (every 12th cycle)
+   - File operations and new windows/tabs (every 15th cycle)
+   - Window/tab closing (every 20th cycle)
+   - Mixed mouse, keyboard, and scrolling actions with natural timing
 
-4. **Statistics**: Every 10 minutes, period statistics are displayed:
+4. **Activity Control**: The script calculates active time and idle time to maintain the target activity level (70-90%).
+
+5. **Statistics**: Every 10 minutes, period statistics are displayed:
    - Period duration
    - Number of activities
    - Activity rate for the period
 
-5. **Safety**: To stop the script, move the mouse to the corner of the screen (failsafe) or press `Ctrl+C`.
+6. **Safety**: To stop the script, move the mouse to the corner of the screen (failsafe) or press `Ctrl+C`.
 
 ## Example Output
 
@@ -83,12 +93,15 @@ Total duration: 10.00 minutes
 Periods completed: 1
 ```
 
-## Future Features
+## Features
 
-The script is designed with scalability in mind. Future versions plan to include:
-- Keyboard shortcut simulation
-- Configurable activity level
-- Additional activity types
+- **Realistic Mouse Activity**: Smooth, direct, and chaotic mouse movements
+- **Keyboard Simulation**: Text typing with realistic intervals and shortcuts
+- **Application Switching**: Automatic switching between applications
+- **Window Management**: Opening/closing windows, tabs, and file dialogs
+- **Scrolling**: Natural mouse wheel scrolling
+- **Natural Timing**: Human-like delays and activity patterns
+- **Fail-Safe Protection**: Stop by moving mouse to screen corner
 
 ## Notes
 

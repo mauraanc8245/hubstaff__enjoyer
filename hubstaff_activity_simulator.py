@@ -5,7 +5,7 @@ import random
 import time
 import sys
 import argparse
-from typing import Tuple, Optional
+from typing import Tuple, Optional, List
 from datetime import datetime, timedelta
 
 pyautogui.FAILSAFE = True
@@ -20,6 +20,8 @@ class ActivitySimulator:
         self.target_minutes = target_min
         self.screen_width, self.screen_height = pyautogui.size()
         self.activity_rate = random.uniform(0.70, 0.90)
+        self.last_activity_type = None
+        self.activity_sequence_counter = 0
         
     def get_random_position(self) -> Tuple[int, int]:
         margin = FAILSAFE_MARGIN
@@ -37,26 +39,101 @@ class ActivitySimulator:
                 continue
             pyautogui.moveTo(x, y, duration=0.05)
     
+    def simulate_keyboard_typing(self):
+        pyautogui.click(button='left')
+        time.sleep(random.uniform(0.1, 0.3))
+        
+        pyautogui.keyDown('shift')
+        time.sleep(random.uniform(0.05, 0.15))
+        pyautogui.keyUp('shift')
+        time.sleep(random.uniform(0.05, 0.15))
+        
+        for _ in range(random.randint(2, 5)):
+            pyautogui.press(random.choice(['left', 'right', 'up', 'down']))
+            time.sleep(random.uniform(0.1, 0.2))
+        
+        if random.random() < 0.3:
+            pyautogui.keyDown('command')
+            time.sleep(0.05)
+            pyautogui.keyUp('command')
+            time.sleep(random.uniform(0.1, 0.2))
+    
+    def simulate_keyboard_shortcuts(self):
+        safe_shortcuts = [
+            ('command', 'f'),
+        ]
+        shortcut = random.choice(safe_shortcuts)
+        pyautogui.hotkey(*shortcut)
+        time.sleep(random.uniform(0.5, 1.0))
+        pyautogui.press('escape')
+        time.sleep(random.uniform(0.2, 0.4))
+    
+    def switch_tab(self):
+        direction = random.choice(['left', 'right'])
+        if direction == 'right':
+            pyautogui.hotkey('option', 'command', 'right')
+        else:
+            pyautogui.hotkey('option', 'command', 'left')
+        time.sleep(random.uniform(0.3, 0.7))
+    
+    def simulate_scrolling(self):
+        scroll_amount = random.randint(5, 15)
+        scroll_direction = random.choice([-1, 1])
+        
+        for _ in range(scroll_amount):
+            pyautogui.scroll(scroll_direction * random.randint(1, 3))
+            time.sleep(random.uniform(0.08, 0.2))
+    
+    def perform_mouse_activity(self):
+        current_pos = pyautogui.position()
+        target_pos = self.get_random_position()
+        
+        movement_type = random.choice(['smooth', 'direct', 'chaotic'])
+        
+        if movement_type == 'smooth':
+            self.smooth_movement(current_pos, target_pos)
+        elif movement_type == 'direct':
+            pyautogui.moveTo(target_pos[0], target_pos[1], duration=random.uniform(0.1, 0.3))
+        else:
+            intermediate_steps = random.randint(2, 5)
+            prev_pos = current_pos
+            for _ in range(intermediate_steps):
+                intermediate_pos = self.get_random_position()
+                self.smooth_movement(prev_pos, intermediate_pos, steps=5)
+                prev_pos = intermediate_pos
+                time.sleep(random.uniform(0.01, 0.05))
+            self.smooth_movement(prev_pos, target_pos, steps=5)
+    
     def perform_activity(self):
         try:
-            current_pos = pyautogui.position()
-            target_pos = self.get_random_position()
+            self.activity_sequence_counter += 1
             
-            movement_type = random.choice(['smooth', 'direct', 'chaotic'])
+            if self.activity_sequence_counter % 3 == 0:
+                self.switch_tab()
             
-            if movement_type == 'smooth':
-                self.smooth_movement(current_pos, target_pos)
-            elif movement_type == 'direct':
-                pyautogui.moveTo(target_pos[0], target_pos[1], duration=random.uniform(0.1, 0.3))
-            else:
-                intermediate_steps = random.randint(2, 5)
-                prev_pos = current_pos
-                for _ in range(intermediate_steps):
-                    intermediate_pos = self.get_random_position()
-                    self.smooth_movement(prev_pos, intermediate_pos, steps=5)
-                    prev_pos = intermediate_pos
-                    time.sleep(random.uniform(0.01, 0.05))
-                self.smooth_movement(prev_pos, target_pos, steps=5)
+            activity_type = random.choices(
+                ['mouse', 'keyboard_type', 'keyboard_shortcut', 'switch_tab'],
+                weights=[40, 20, 15, 25]
+            )[0]
+            
+            if activity_type == 'mouse':
+                self.perform_mouse_activity()
+                self.last_activity_type = 'mouse'
+            elif activity_type == 'keyboard_type':
+                self.simulate_keyboard_typing()
+                self.last_activity_type = 'keyboard'
+                time.sleep(random.uniform(0.3, 0.8))
+            elif activity_type == 'keyboard_shortcut':
+                self.simulate_keyboard_shortcuts()
+                self.last_activity_type = 'keyboard'
+            elif activity_type == 'switch_tab':
+                self.switch_tab()
+                self.last_activity_type = 'switch'
+                time.sleep(random.uniform(0.3, 0.7))
+            
+            if random.random() < 0.3 and self.last_activity_type != 'mouse':
+                self.perform_mouse_activity()
+            
         except pyautogui.FailSafeException:
             raise
     
@@ -136,7 +213,7 @@ class ActivitySimulator:
 
 def main():
     parser = argparse.ArgumentParser(
-        description='Hubstaff Activity Simulator - Simulates mouse activity for testing Hubstaff tracking'
+        description='Hubstaff Activity Simulator - Simulates realistic human activity (mouse, keyboard, scrolling, app switching) for testing Hubstaff tracking'
     )
     parser.add_argument(
         '--delay-min',
