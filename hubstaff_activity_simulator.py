@@ -65,24 +65,6 @@ class ActivitySimulator:
         shortcut = random.choice(safe_shortcuts)
         pyautogui.hotkey(*shortcut)
         time.sleep(random.uniform(0.5, 1.0))
-        
-        if shortcut == ('command', 'f'):
-            common_chars = list('abcdefghijklmnopqrstuvwxyz0123456789 ')
-            search_text_length = random.randint(3, 12)
-            search_text = ''.join(random.choices(common_chars, k=search_text_length))
-            
-            for char in search_text:
-                pyautogui.write(char, interval=random.uniform(0.1, 0.25))
-                time.sleep(random.uniform(0.05, 0.15))
-            
-            time.sleep(random.uniform(0.3, 0.8))
-            
-            for _ in range(len(search_text)):
-                pyautogui.press('backspace')
-                time.sleep(random.uniform(0.05, 0.15))
-            
-            time.sleep(random.uniform(0.2, 0.5))
-        
         pyautogui.press('escape')
         time.sleep(random.uniform(0.2, 0.4))
     
