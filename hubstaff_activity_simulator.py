@@ -5,15 +5,16 @@ import random
 import time
 import sys
 import argparse
-from typing import Tuple
+from typing import Tuple, Optional
 from datetime import datetime, timedelta
 
 pyautogui.FAILSAFE = True
 pyautogui.PAUSE = 0
+FAILSAFE_MARGIN = 100
 
 
 class ActivitySimulator:
-    def __init__(self, delay_min: int, delay_max: int, target_min: int = 10):
+    def __init__(self, delay_min: int, delay_max: int, target_min: Optional[int] = None):
         self.delay_min = delay_min
         self.delay_max = delay_max
         self.target_minutes = target_min
@@ -21,7 +22,7 @@ class ActivitySimulator:
         self.activity_rate = random.uniform(0.70, 0.90)
         
     def get_random_position(self) -> Tuple[int, int]:
-        margin = 50
+        margin = FAILSAFE_MARGIN
         x = random.randint(margin, self.screen_width - margin)
         y = random.randint(margin, self.screen_height - margin)
         return (x, y)
@@ -31,27 +32,33 @@ class ActivitySimulator:
             t = i / steps
             x = int(start_pos[0] + (end_pos[0] - start_pos[0]) * t)
             y = int(start_pos[1] + (end_pos[1] - start_pos[1]) * t)
+            if x < FAILSAFE_MARGIN or x > self.screen_width - FAILSAFE_MARGIN or \
+               y < FAILSAFE_MARGIN or y > self.screen_height - FAILSAFE_MARGIN:
+                continue
             pyautogui.moveTo(x, y, duration=0.05)
     
     def perform_activity(self):
-        current_pos = pyautogui.position()
-        target_pos = self.get_random_position()
-        
-        movement_type = random.choice(['smooth', 'direct', 'chaotic'])
-        
-        if movement_type == 'smooth':
-            self.smooth_movement(current_pos, target_pos)
-        elif movement_type == 'direct':
-            pyautogui.moveTo(target_pos[0], target_pos[1], duration=random.uniform(0.1, 0.3))
-        else:
-            intermediate_steps = random.randint(2, 5)
-            prev_pos = current_pos
-            for _ in range(intermediate_steps):
-                intermediate_pos = self.get_random_position()
-                self.smooth_movement(prev_pos, intermediate_pos, steps=5)
-                prev_pos = intermediate_pos
-                time.sleep(random.uniform(0.01, 0.05))
-            self.smooth_movement(prev_pos, target_pos, steps=5)
+        try:
+            current_pos = pyautogui.position()
+            target_pos = self.get_random_position()
+            
+            movement_type = random.choice(['smooth', 'direct', 'chaotic'])
+            
+            if movement_type == 'smooth':
+                self.smooth_movement(current_pos, target_pos)
+            elif movement_type == 'direct':
+                pyautogui.moveTo(target_pos[0], target_pos[1], duration=random.uniform(0.1, 0.3))
+            else:
+                intermediate_steps = random.randint(2, 5)
+                prev_pos = current_pos
+                for _ in range(intermediate_steps):
+                    intermediate_pos = self.get_random_position()
+                    self.smooth_movement(prev_pos, intermediate_pos, steps=5)
+                    prev_pos = intermediate_pos
+                    time.sleep(random.uniform(0.01, 0.05))
+                self.smooth_movement(prev_pos, target_pos, steps=5)
+        except pyautogui.FailSafeException:
+            raise
     
     def calculate_active_time(self) -> float:
         base_interval = (self.delay_min + self.delay_max) / 2
@@ -64,12 +71,8 @@ class ActivitySimulator:
         idle_time = base_interval * (1 - self.activity_rate)
         return idle_time
     
-    def run_cycle(self, start_time: datetime, session_end: datetime):
-        if datetime.now() >= session_end:
-            return False
-        
-        remaining = (session_end - datetime.now()).total_seconds()
-        if remaining <= 0:
+    def run_cycle(self, session_end: Optional[datetime] = None):
+        if session_end is not None and datetime.now() >= session_end:
             return False
         
         self.perform_activity()
@@ -82,25 +85,26 @@ class ActivitySimulator:
         return True
     
     def run(self):
-        print(f"Starting activity simulation for {self.target_minutes} minutes")
+        if self.target_minutes is None:
+            print("Starting continuous activity simulation (run until stopped)")
+        else:
+            print(f"Starting activity simulation for {self.target_minutes} minutes")
         print(f"Activity rate: {self.activity_rate:.1%}")
         print(f"Delay range: {self.delay_min}-{self.delay_max} seconds")
-        print(f"Press Ctrl+C to stop")
+        print(f"Press Ctrl+C to stop, or move mouse to screen corner for fail-safe")
         print("\nStarting in 3 seconds...")
         time.sleep(3)
         
         session_start = datetime.now()
-        session_end = session_start + timedelta(minutes=self.target_minutes)
+        session_end = None if self.target_minutes is None else session_start + timedelta(minutes=self.target_minutes)
         
         period_start = session_start
         period_count = 0
         activity_count = 0
         
         try:
-            while datetime.now() < session_end:
-                remaining_total = (session_end - datetime.now()).total_seconds()
-                
-                if self.run_cycle(session_start, session_end):
+            while session_end is None or datetime.now() < session_end:
+                if self.run_cycle(session_end):
                     activity_count += 1
                     remaining_period = (period_start + timedelta(minutes=10) - datetime.now()).total_seconds()
                     
@@ -119,11 +123,10 @@ class ActivitySimulator:
                 else:
                     break
                     
-                if remaining_total <= 0:
-                    break
-                    
         except KeyboardInterrupt:
             print("\n\nSimulation stopped by user")
+        except pyautogui.FailSafeException:
+            print("\n\nSimulation stopped: mouse moved to screen corner (fail-safe triggered)")
         
         total_duration = (datetime.now() - session_start).total_seconds()
         print(f"\n\nSession completed:")
@@ -150,8 +153,8 @@ def main():
     parser.add_argument(
         '--duration',
         type=int,
-        default=10,
-        help='Simulation duration in minutes (default: 10)'
+        default=None,
+        help='Simulation duration in minutes (default: unlimited, runs until stopped)'
     )
     
     args = parser.parse_args()
@@ -164,7 +167,7 @@ def main():
         print("Error: Minimum delay cannot be greater than maximum delay")
         sys.exit(1)
     
-    if args.duration < 1:
+    if args.duration is not None and args.duration < 1:
         print("Error: Duration must be at least 1 minute")
         sys.exit(1)
     
