@@ -16,32 +16,34 @@ This script simulates random mouse movements with configurable intervals, mainta
 1. Install dependencies:
 
 ```bash
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 ```
+
+**Note**: On macOS, use `python3` and `pip3` instead of `python` and `pip`.
 
 ## Usage
 
 ### Basic Run
 
 ```bash
-python hubstaff_activity_simulator.py
+python3 hubstaff_activity_simulator.py
 ```
 
-Runs simulation with default parameters:
+Runs simulation continuously until stopped (Ctrl+C or fail-safe):
 - Minimum delay: 5 seconds
 - Maximum delay: 15 seconds
-- Duration: 10 minutes
+- Duration: unlimited (runs until manually stopped)
 
 ### Custom Parameters
 
 ```bash
-python hubstaff_activity_simulator.py --delay-min 3 --delay-max 12 --duration 20
+python3 hubstaff_activity_simulator.py --delay-min 3 --delay-max 12 --duration 20
 ```
 
 **Parameters:**
 - `--delay-min` - minimum delay between activities (seconds, default: 5)
 - `--delay-max` - maximum delay between activities (seconds, default: 15)
-- `--duration` - simulation duration (minutes, default: 10)
+- `--duration` - simulation duration in minutes (default: unlimited, runs until stopped)
 
 ## How It Works
 
@@ -64,10 +66,10 @@ python hubstaff_activity_simulator.py --delay-min 3 --delay-max 12 --duration 20
 ## Example Output
 
 ```
-Starting activity simulation for 10 minutes
+Starting continuous activity simulation (run until stopped)
 Activity rate: 78.5%
 Delay range: 5-15 seconds
-Press Ctrl+C to stop
+Press Ctrl+C to stop, or move mouse to screen corner for fail-safe
 
 Starting in 3 seconds...
 
